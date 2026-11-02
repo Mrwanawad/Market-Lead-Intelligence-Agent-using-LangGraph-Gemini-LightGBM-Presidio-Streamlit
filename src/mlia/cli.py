@@ -10,7 +10,7 @@ from pathlib import Path
 import typer
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)  # project .env wins over stale machine-wide keys
 app = typer.Typer(add_completion=False, help="Market & Lead Intelligence Agent")
 
 
@@ -24,12 +24,12 @@ def _logging(verbose: bool) -> None:
 
 
 @app.command()
-def seed(units: int = 240, leads: int = 40) -> None:
+def seed(units: int = 240, leads: int = 40, if_empty: bool = False) -> None:
     """Load synthetic inventory + consented inbound leads into the DB."""
     from .pipeline import seed as _seed
 
     _logging(False)
-    typer.echo(json.dumps(_seed(n_units=units, n_leads=leads)))
+    typer.echo(json.dumps(_seed(n_units=units, n_leads=leads, if_empty=if_empty)))
 
 
 @app.command()

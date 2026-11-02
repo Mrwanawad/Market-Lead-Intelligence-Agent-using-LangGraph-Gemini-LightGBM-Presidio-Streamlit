@@ -207,6 +207,12 @@ def run(
     }
     if not new_sigs and not leads:
         errors.append("EMPTY_RUN: no new signals and no consented leads")
+    if llm.not_configured:
+        errors.append("LLM_NOT_CONFIGURED: no API key; heuristic extraction used")
+    if llm.usage.calls and not llm.price_known:
+        errors.append(f"COST_UNKNOWN: no price for {llm.model}; set MLIA_PRICE_IN/MLIA_PRICE_OUT")
+    if llm.usage.errors and not llm.auth_failed:
+        errors.append(f"LLM_ERRORS: {llm.usage.errors} failed calls fell back to heuristics")
     if llm.auth_failed:
         errors.append("LLM_AUTH_FAILED: API key rejected; heuristic extraction used")
     failed = [x for x in slog if x.get("kind") in ("search", "fetch") and not x.get("ok")]
@@ -231,11 +237,15 @@ def run(
             "cost_usd": llm.usage.cost_usd, "errors": errors, "rows": rows, "signals": new_sigs}
 
 
-def seed(eng=None, n_units: int = 240, n_leads: int = 40) -> dict:
+def seed(eng=None, n_units: int = 240, n_leads: int = 40, if_empty: bool = False) -> dict:
     """Load synthetic inventory + consented inbound leads (idempotent upsert)."""
     from .synthetic import make_leads, make_units
 
     eng = eng or db.engine()
+    if if_empty:
+        with eng.connect() as c:
+            if c.execute(select(db.units.c.unit_id).limit(1)).first():
+                return {"skipped": "inventory already loaded"}
     us, ls = make_units(n_units), make_leads(n_leads)
     db.upsert_by_key(eng, db.units, "unit_id", [{"unit_id": u.unit_id, "payload": u.model_dump(mode="json"),
                                                   "area": u.area, "price_egp": u.price_egp, "available": u.available}

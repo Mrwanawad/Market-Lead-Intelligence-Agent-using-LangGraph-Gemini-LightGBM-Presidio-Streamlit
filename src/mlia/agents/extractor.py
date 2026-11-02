@@ -18,7 +18,11 @@ Rules:
 - Business information only. Never extract private-life data about individuals (family, health,
   salary guesses, home address, live location). People may appear only as company spokespersons.
 - signal_type: new_launch | price_change | competitor_move | office_opening | relocation_firm.
-  office_opening = a company opening/expanding offices or HQ in Egypt (corporate housing demand).
+  office_opening = a private company opening/expanding offices or HQ in Egypt (corporate housing demand);
+  not government relocations or encyclopedia background.
+  competitor_move = a property portal, brokerage or proptech launching a product, partnership or campaign;
+  NOT infrastructure, transport, shipping, industrial zones or general economic news (skip those).
+- Skip evergreen/background pages (encyclopedias, market-size reports) unless they state a dated new event.
 - area: Egyptian city/area (e.g. New Cairo, New Capital, Sheikh Zayed, 6th of October, North Coast, Ain Sokhna).
 - budget_band: from unit prices if stated (<3M EGP, 3-6M EGP, 6-10M EGP, 10-20M EGP, >20M EGP) else unknown.
 - confidence: 0-1, how clearly the page states the signal.

@@ -58,7 +58,7 @@ All settings are environment variables with the `MLIA_` prefix (see `.env.exampl
 | Setting | Default | |
 |---|---|---|
 | `MLIA_LLM_PROVIDER` | `gemini` | `gemini` / `openai` / `anthropic` / `fake` |
-| `MLIA_LLM_MODEL` | provider default | `gemini-2.5-flash`, `gpt-4o-mini`, `claude-opus-5-5` |
+| `MLIA_LLM_MODEL` | provider default | `gemini-3.1-flash-lite`, `gpt-4o-mini`, `claude-opus-5-5` |
 | `MLIA_SEARCH_PROVIDER` | `auto` | Tavily > Exa > DuckDuckGo; `fixtures` for offline |
 | `MLIA_MAX_QUERIES` / `MLIA_MAX_PAGES` | 12 / 30 | cost guardrails per run |
 | `MLIA_DATABASE_URL` | SQLite in `data/` | Postgres URL in production |

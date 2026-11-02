@@ -23,12 +23,13 @@ log = logging.getLogger(__name__)
 T = TypeVar("T", bound=BaseModel)
 
 DEFAULT_MODELS = {
-    "gemini": "gemini-2.5-flash",
+    "gemini": "gemini-3.1-flash-lite",
     "openai": "gpt-4o-mini",
     "anthropic": "claude-opus-5-5",
 }
 
-# USD per 1M tokens (input, output). Override with MLIA_PRICE_IN / MLIA_PRICE_OUT.
+# USD per 1M tokens (input, output). Models not listed report cost as unknown;
+# set MLIA_PRICE_IN / MLIA_PRICE_OUT to price them.
 PRICES = {
     "gemini-2.5-flash": (0.30, 2.50),
     "gemini-2.5-flash-lite": (0.10, 0.40),
@@ -79,8 +80,10 @@ class LLM:
         self.usage = Usage()
         self._client = None
         self.auth_failed = False
+        self.not_configured = False
         if self.provider != "fake" and not self._has_key():
             log.warning("No API key for provider %s; running in heuristic (fake) mode", self.provider)
+            self.not_configured = True
             self.provider = "fake"
 
     # ---------------------------------------------------------------- helpers
@@ -95,6 +98,10 @@ class LLM:
     @property
     def available(self) -> bool:
         return self.provider != "fake"
+
+    @property
+    def price_known(self) -> bool:
+        return bool(os.getenv("MLIA_PRICE_IN") and os.getenv("MLIA_PRICE_OUT")) or self.model in PRICES
 
     def _price(self) -> tuple[float, float]:
         if os.getenv("MLIA_PRICE_IN") and os.getenv("MLIA_PRICE_OUT"):
