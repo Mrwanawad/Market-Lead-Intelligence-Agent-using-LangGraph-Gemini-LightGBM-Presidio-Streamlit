@@ -1,0 +1,63 @@
+[
+ {
+  "url": "https://fixtures.mlia.local/news/horizon-launches-palm-crest-phase-3",
+  "signal_type": "new_launch",
+  "entity": "Horizon Developments",
+  "area": "New Cairo",
+  "payment_plan": true,
+  "budget_band": "6-10M EGP"
+ },
+ {
+  "url": "https://fixtures.mlia.local/markets/palm-crest-phase-3-sales",
+  "signal_type": "new_launch",
+  "entity": "Horizon Developments",
+  "area": "New Cairo"
+ },
+ {
+  "url": "https://fixtures.mlia.local/news/nile-crest-raises-prices-zayed",
+  "signal_type": "price_change",
+  "entity": "Nile Crest Group",
+  "area": "Sheikh Zayed",
+  "payment_plan": true
+ },
+ {
+  "url": "https://fixtures.mlia.local/business/sahara-urban-new-capital-plan",
+  "signal_type": "price_change",
+  "entity": "Sahara Urban",
+  "area": "New Capital",
+  "payment_plan": true,
+  "budget_band": "3-6M EGP"
+ },
+ {
+  "url": "https://fixtures.mlia.local/tech/finovate-opens-cairo-hub",
+  "signal_type": "office_opening",
+  "entity": "Finovate Technologies",
+  "area": "New Cairo"
+ },
+ {
+  "url": "https://fixtures.mlia.local/business/delta-pharma-zayed-office",
+  "signal_type": "office_opening",
+  "entity": "Delta Pharma",
+  "area": "Sheikh Zayed"
+ },
+ {
+  "url": "https://fixtures.mlia.local/hr/globalmove-egypt-relocation",
+  "signal_type": "relocation_firm",
+  "entity": "GlobalMove Relocations",
+  "area": "New Cairo"
+ },
+ {
+  "url": "https://fixtures.mlia.local/portal/listingsplus-partnership",
+  "signal_type": "competitor_move",
+  "entity": "ListingsPlus Egypt",
+  "area": null
+ },
+ {
+  "url": "https://fixtures.mlia.local/society/private-gossip",
+  "signal_type": null
+ },
+ {
+  "url": "https://fixtures.mlia.local/lifestyle/ramadan-recipes",
+  "signal_type": null
+ }
+]

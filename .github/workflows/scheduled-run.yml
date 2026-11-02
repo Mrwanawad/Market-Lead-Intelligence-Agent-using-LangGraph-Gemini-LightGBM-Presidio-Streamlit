@@ -1,0 +1,60 @@
+name: scheduled-run
+
+# Every 6 hours. Skips until secrets are configured (GEMINI_API_KEY + MLIA_DATABASE_URL).
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: scheduled-run
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+      EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+      MLIA_DATABASE_URL: ${{ secrets.MLIA_DATABASE_URL }}
+      MLIA_LLM_PROVIDER: ${{ vars.MLIA_LLM_PROVIDER || 'gemini' }}
+      MLIA_CRM_WEBHOOK_URL: ${{ secrets.MLIA_CRM_WEBHOOK_URL }}
+      LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+      LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+      LANGFUSE_HOST: ${{ secrets.LANGFUSE_HOST }}
+    steps:
+      - name: Check secrets
+        id: gate
+        run: |
+          if [ -z "$MLIA_DATABASE_URL" ]; then
+            echo "MLIA_DATABASE_URL not set; skipping run (history must persist between runs)."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.ok == 'true'
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.ok == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        if: steps.gate.outputs.ok == 'true'
+        run: |
+          pip install -e ".[browser]"
+          python -m spacy download en_core_web_sm
+          python -m playwright install --with-deps chromium
+      - name: Run pipeline
+        if: steps.gate.outputs.ok == 'true'
+        run: mlia run
+      - uses: actions/upload-artifact@v4
+        if: steps.gate.outputs.ok == 'true'
+        with:
+          name: mlia-run-${{ github.run_id }}
+          path: outputs/
+          retention-days: 30

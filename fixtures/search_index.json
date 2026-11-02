@@ -1,0 +1,128 @@
+[
+ {
+  "url": "https://fixtures.mlia.local/news/horizon-launches-palm-crest-phase-3",
+  "title": "Horizon Developments launches Palm Crest Phase 3 in New Cairo",
+  "snippet": "Horizon Developments launched Phase 3 of its Palm Crest compound in New Cairo on Sunday, adding 420 apartments and townhouses.",
+  "signal_type": "new_launch",
+  "tags": [
+   "launch",
+   "new cairo",
+   "2026"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/markets/palm-crest-phase-3-sales",
+  "title": "Palm Crest Phase 3 opens for sales",
+  "snippet": "Horizon Development launched the third phase of Palm Crest in New Cairo this week.",
+  "signal_type": "new_launch",
+  "tags": [
+   "launch",
+   "new cairo"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/news/nile-crest-raises-prices-zayed",
+  "title": "Nile Crest Group raises prices 12% at Zayed Dunes",
+  "snippet": "Nile Crest Group raised prices at its Zayed Dunes project in Sheikh Zayed by 12% effective December 1, 2026.",
+  "signal_type": "price_change",
+  "tags": [
+   "price increase",
+   "sheikh zayed",
+   "2026",
+   "payment plan"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/business/sahara-urban-new-capital-plan",
+  "title": "Sahara Urban extends installments to 12 years in the New Capital",
+  "snippet": "Sahara Urban introduced a new payment plan at Capital Gardens in the New Administrative Capital: 5% down payment with installments over 12 years.",
+  "signal_type": "price_change",
+  "tags": [
+   "payment plan",
+   "new capital",
+   "installments",
+   "years",
+   "down payment"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/tech/finovate-opens-cairo-hub",
+  "title": "Finovate Technologies opens regional hub in New Cairo, plans 300 hires",
+  "snippet": "Finovate Technologies opens its new regional headquarters in New Cairo in January 2026, the fintech firm announced.",
+  "signal_type": "office_opening",
+  "tags": [
+   "company",
+   "opens",
+   "office",
+   "new cairo",
+   "egypt",
+   "2026",
+   "headquarters",
+   "hiring"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/business/delta-pharma-zayed-office",
+  "title": "Delta Pharma expands its presence with new Sheikh Zayed offices",
+  "snippet": "Delta Pharma inaugurated new administrative offices in Sheikh Zayed, expanding its presence in West Cairo.",
+  "signal_type": "office_opening",
+  "tags": [
+   "company",
+   "office",
+   "sheikh zayed",
+   "expands",
+   "egypt",
+   "2026"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/hr/globalmove-egypt-relocation",
+  "title": "GlobalMove Relocations sees surge in assignees moving to Cairo",
+  "snippet": "GlobalMove Relocations said it is handling a record number of employees relocating to Cairo in 2026, mostly to New Cairo and Sheikh Zayed.",
+  "signal_type": "relocation_firm",
+  "tags": [
+   "relocation",
+   "employee",
+   "egypt",
+   "cairo",
+   "2026",
+   "company"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/portal/listingsplus-partnership",
+  "title": "ListingsPlus Egypt partners with banks on mortgage pre-approval",
+  "snippet": "ListingsPlus Egypt rolls out a mortgage pre-approval feature in partnership with two local banks, the property portal said.",
+  "signal_type": "competitor_move",
+  "tags": [
+   "egypt",
+   "real estate",
+   "news",
+   "aqarmap",
+   "property finder",
+   "bayut"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/society/private-gossip",
+  "title": "Executive moves to New Cairo",
+  "snippet": "The executive's wife and children moved into a villa in New Cairo last month, according to neighbours.",
+  "signal_type": "office_opening",
+  "tags": [
+   "company",
+   "office",
+   "new cairo",
+   "2026"
+  ]
+ },
+ {
+  "url": "https://fixtures.mlia.local/lifestyle/ramadan-recipes",
+  "title": "Ten Ramadan recipes to try this year",
+  "snippet": "Our favourite recipes for the holy month include stuffed vine leaves and kunafa.",
+  "signal_type": "new_launch",
+  "tags": [
+   "new cairo",
+   "2026"
+  ]
+ }
+]

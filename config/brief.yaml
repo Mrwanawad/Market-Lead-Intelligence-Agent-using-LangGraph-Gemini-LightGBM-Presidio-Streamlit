@@ -1,0 +1,48 @@
+# Research brief: what the planner turns into search queries every run.
+company: Brokerage
+target_areas:
+  - New Cairo
+  - New Capital
+  - Sheikh Zayed
+  - 6th of October
+  - Mostakbal City
+  - North Coast
+  - Ain Sokhna
+segments:
+  - residential primary
+  - resale
+  - commercial / admin offices
+  - corporate housing
+competitors:
+  - Aqarmap
+  - Property Finder Egypt
+  - Bayut Egypt
+signal_types:
+  - name: new_launch
+    description: A developer announces or launches a new compound, phase or project.
+    query_templates:
+      - "new project launch {area} 2026 developer"
+      - "{area} new phase launch payment plan"
+  - name: price_change
+    description: Developer raises/cuts unit prices or changes payment plans, down payments or installment years.
+    query_templates:
+      - "{area} developer price increase 2026"
+      - "{area} new payment plan down payment installments years"
+  - name: competitor_move
+    description: A competitor portal/brokerage launches a product, partnership, campaign or listing push.
+    query_templates:
+      - "{competitor} Egypt real estate news"
+  - name: office_opening
+    description: A company opens or expands offices/HQ in Egypt -> corporate housing demand for relocating staff.
+    query_templates:
+      - "company opens new office {area} Egypt 2026"
+      - "multinational expands headquarters Cairo hiring 2026"
+  - name: relocation_firm
+    description: Relocation / mobility firms or HR announcements moving employees into Egypt.
+    query_templates:
+      - "employee relocation Egypt Cairo 2026 company"
+language_hints: [en, ar]
+brokers:
+  - { name: "Broker A", areas: ["New Cairo", "Mostakbal City", "New Capital"] }
+  - { name: "Broker B", areas: ["Sheikh Zayed", "6th of October"] }
+  - { name: "Broker C", areas: ["North Coast", "Ain Sokhna"] }
