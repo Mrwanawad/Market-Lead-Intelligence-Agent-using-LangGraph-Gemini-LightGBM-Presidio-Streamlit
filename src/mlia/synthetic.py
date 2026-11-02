@@ -79,7 +79,7 @@ def make_leads(n: int = 40, seed: int = 5, now: datetime | None = None) -> list[
             message=msg, area_interest=area, stated_budget_egp=stated, unit_type=t,
             consent_marketing=consent, consent_source="web form checkbox v2" if consent else "",
             created_at=now - timedelta(hours=float(rng.uniform(0.5, 24 * 10))),
-            pages_viewed=int(rng.poisson(4)), reply_minutes=float(rng.choice([2, 5, 15, 60, 240, np.nan])),
+            pages_viewed=int(rng.poisson(4)), reply_minutes=[2.0, 5.0, 15.0, 60.0, 240.0, None][int(rng.integers(6))],
             previous_contacts=int(rng.poisson(0.6)),
         ))
     return out

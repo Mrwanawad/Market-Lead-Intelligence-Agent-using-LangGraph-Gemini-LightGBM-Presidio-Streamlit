@@ -8,6 +8,14 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_USER: mlia, POSTGRES_PASSWORD: mlia, POSTGRES_DB: mlia }
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U mlia" --health-interval 5s --health-retries 10
+    env:
+      MLIA_TEST_POSTGRES_URL: postgresql://mlia:mlia@localhost:5432/mlia
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

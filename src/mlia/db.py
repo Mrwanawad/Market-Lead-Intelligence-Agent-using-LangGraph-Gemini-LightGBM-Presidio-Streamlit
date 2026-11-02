@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -139,6 +140,18 @@ def _make(url: str) -> Engine:
     return eng
 
 
+# ------------------------------------------------------------------ helpers
+def json_safe(v):
+    """Postgres JSON rejects NaN/Infinity; SQLite accepts them. Normalize to None everywhere."""
+    if isinstance(v, float) and not math.isfinite(v):
+        return None
+    if isinstance(v, dict):
+        return {k: json_safe(x) for k, x in v.items()}
+    if isinstance(v, list | tuple):
+        return [json_safe(x) for x in v]
+    return v
+
+
 # ------------------------------------------------------------------ queries
 def known_fingerprints(eng: Engine) -> set[str]:
     with eng.connect() as c:
@@ -167,12 +180,12 @@ def recent_queries(eng: Engine, limit: int = 3) -> list[str]:
 def insert_many(eng: Engine, table: Table, rows: list[dict]) -> None:
     if rows:
         with eng.begin() as c:
-            c.execute(insert(table), rows)
+            c.execute(insert(table), [json_safe(r) for r in rows])
 
 
 def upsert_by_key(eng: Engine, table: Table, key: str, rows: list[dict]) -> None:
     with eng.begin() as c:
-        for r in rows:
+        for r in map(json_safe, rows):
             exists = c.execute(select(table.c[key]).where(table.c[key] == r[key])).first()
             if exists:
                 c.execute(update(table).where(table.c[key] == r[key]).values(**r))
