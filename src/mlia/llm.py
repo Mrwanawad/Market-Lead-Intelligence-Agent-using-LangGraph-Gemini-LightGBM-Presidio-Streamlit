@@ -129,7 +129,7 @@ class LLM:
                 raise LLMUnavailable(str(e)) from e
             raise
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=20), reraise=True,
+    @retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=2, min=4, max=60), reraise=True,
            retry=retry_if_exception(lambda e: not _is_auth_error(e)))
     def _call(self, system: str, prompt: str, schema: type[T], agent: str) -> T:
         fn = {"gemini": self._gemini, "openai": self._openai, "anthropic": self._anthropic}[self.provider]

@@ -10,11 +10,21 @@ from langgraph.graph import END, START, StateGraph
 
 from .agents import extractor, planner, researcher, verifier
 from .config import Brief, Settings
+from .geo import find_area
 from .llm import LLM
 from .schemas import Page, SearchPlan, VerifiedSignal
 from .web.search import SearchProvider
 
 log = logging.getLogger(__name__)
+
+
+_EGYPT = ("egypt", "cairo", "egp", "مصر", "القاهرة")
+
+
+def is_relevant(page: Page, brief: Brief) -> bool:
+    """Cheap pre-LLM gate: page must mention Egypt or a target area."""
+    t = f"{page.title} {page.text[:6000]}".lower()
+    return any(k in t for k in _EGYPT) or find_area(t) is not None
 
 
 class ResearchState(TypedDict, total=False):
@@ -45,10 +55,15 @@ def build_graph(llm: LLM, provider: SearchProvider, settings: Settings):
         def _one(page: Page):
             return [(s.model_dump(), page) for s in extractor.extract(page, llm).signals]
 
-        with ThreadPoolExecutor(max_workers=4) as ex:
-            cands = [c for batch in ex.map(_one, state.get("pages", [])) for c in batch]
-        log.info("extractor: %d candidate signals", len(cands))
-        return {"candidates": cands}
+        pages = [p for p in state.get("pages", []) if is_relevant(p, state["brief"])]
+        skipped = len(state.get("pages", [])) - len(pages)
+        with ThreadPoolExecutor(max_workers=max(1, settings.llm_concurrency)) as ex:
+            cands = [c for batch in ex.map(_one, pages) for c in batch]
+        log.info("extractor: %d candidate signals (%d off-topic pages skipped)", len(cands), skipped)
+        slog = state.get("source_log", []) + [{"kind": "irrelevant", "target": p.url, "ok": False,
+                                               "error": "no Egypt/target-area mention"}
+                                              for p in state.get("pages", []) if p not in pages]
+        return {"candidates": cands, "source_log": slog}
 
     def verify_node(state: ResearchState) -> ResearchState:
         from .schemas import ExtractedSignal

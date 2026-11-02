@@ -19,6 +19,8 @@ FIXTURES = ROOT / "fixtures"
 BLOCKED_DOMAINS = (
     "facebook.com", "instagram.com", "linkedin.com/in/", "tiktok.com", "x.com", "twitter.com",
     "snapchat.com", "wa.me", "t.me",
+    # reference / dictionary pages: never a dated market signal, only burn LLM quota
+    "wikipedia.org", "merriam-webster.com", "dictionary.com", "cambridge.org/dictionary", "britannica.com",
 )
 
 

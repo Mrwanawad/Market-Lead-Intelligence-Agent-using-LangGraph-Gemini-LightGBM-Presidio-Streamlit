@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import time
+import uuid
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
@@ -64,7 +65,7 @@ def run(
     llm = llm or LLM()
     provider = provider or get_provider(s.search_provider)
     eng = db.engine(s.database_url)
-    run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid.uuid4().hex[:4]
     t0 = time.perf_counter()
     tracer = Tracer(run_id)
     errors: list[str] = []
@@ -244,8 +245,9 @@ def seed(eng=None, n_units: int = 240, n_leads: int = 40, if_empty: bool = False
     eng = eng or db.engine()
     if if_empty:
         with eng.connect() as c:
-            if c.execute(select(db.units.c.unit_id).limit(1)).first():
-                return {"skipped": "inventory already loaded"}
+            if (c.execute(select(db.units.c.unit_id).limit(1)).first()
+                    and c.execute(select(db.leads.c.lead_id).limit(1)).first()):
+                return {"skipped": "inventory and leads already loaded"}
     us, ls = make_units(n_units), make_leads(n_leads)
     db.upsert_by_key(eng, db.units, "unit_id", [{"unit_id": u.unit_id, "payload": u.model_dump(mode="json"),
                                                   "area": u.area, "price_egp": u.price_egp, "available": u.available}

@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     llm_provider: Literal["gemini", "openai", "anthropic", "fake"] = "gemini"
     llm_model: str | None = None  # provider default when empty
     llm_temperature: float = 0.0
+    llm_concurrency: int = 2  # parallel extractor calls (free-tier quotas are per minute)
 
     # Search: auto picks tavily > exa > ddg, falling back to fixtures when offline
     search_provider: Literal["auto", "tavily", "exa", "ddg", "fixtures"] = "auto"
