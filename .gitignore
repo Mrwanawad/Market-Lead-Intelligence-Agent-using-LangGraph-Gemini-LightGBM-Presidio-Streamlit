@@ -10,3 +10,4 @@ outputs/
 build/
 dist/
 .streamlit/secrets.toml
+docs/demo/build/

@@ -4,6 +4,8 @@ A scheduled multi-agent pipeline for a real-estate brokerage. Every 6 hours it r
 
 The full design is in [architecture.md](architecture.md).
 
+<p align="center"><img src="docs/demo.gif" width="100%" alt="Demo of the Streamlit viewer: open the latest run, filter to high-intent rows, read each score with its reasons, open the market digest and save broker feedback"/></p>
+
 ```
 Scheduler (GitHub Actions cron / APScheduler, every 6h)
   -> LangGraph: Planner -> Researcher -> Extractor -> Verifier

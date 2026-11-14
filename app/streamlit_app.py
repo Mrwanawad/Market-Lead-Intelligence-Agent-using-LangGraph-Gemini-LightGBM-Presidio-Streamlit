@@ -69,7 +69,7 @@ with tab_rows:
             view[["lead_or_company", "row_kind", "signal_type", "area", "budget_band", "intent_score", "score_reasons",
                   "assigned_broker", "next_action", "matched_units", "summary", "source_url", "broker_feedback", "row_id"]],
             width="stretch", hide_index=True,
-            column_config={"intent_score": st.column_config.ProgressColumn("intent", min_value=0, max_value=100),
+            column_config={"intent_score": st.column_config.ProgressColumn("intent", min_value=0, max_value=100, format="%.0f"),
                            "source_url": st.column_config.LinkColumn("source")},
         )
         xlsx = runs.loc[runs.run_id == run_id, "excel_path"].iloc[0]
